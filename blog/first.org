@@ -1,0 +1,10 @@
+#+TITLE:       first article
+#+AUTHOR:      sheldon
+#+EMAIL:       xie.long.en@gmail.com
+#+DATE:        2014-05-10 六
+#+URI:         /blog/%y/%m/%d/first article
+#+KEYWORDS:    first,test
+#+TAGS:        first,tag
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: just test
