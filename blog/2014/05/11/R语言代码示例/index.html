@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>R语言代码示例 - org-page</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="sheldon" />
+    <meta name="description" content="常用代码示例" />
+    <meta name="keywords" content="R语言" />
+    <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/prettify.css" type="text/css">
+  </head>
+  <body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="/">org-page</a></h1>
+        <p>static site generator</p>
+        <ul>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/tags/">Tags</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="https://github.com/kelvinh/org-page">GitHub</a></li>
+          <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="http://www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="q" value="site:github.com/xielongen/xielongen.github.io.git">
+        </form>
+      </header>
+    </div>
+
+<div>
+<div class="post">
+<h1>R语言代码示例</h1>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">R语言简介</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>工科生说Matlab完爆其他-------------指的是很多现成的工具箱
+</li>
+<li>数学系的说Mathematica高贵冷艳------数学功能丰富
+</li>
+<li>统计系的说R语言作图领域天下无敌-----绘图漂亮
+</li>
+<li>计算机系的说Python低调奢华有内涵----matplot,scipy,
+</li>
+</ul>
+<hr  />
+<p>
+R语言是一个能够自由有效地用于统计计算和绘图的语言和环境，它提供了广泛的统计分析和绘图技术，包括线性和非线性模型、统计检验、时间序列、分类、聚类等方法。
+从R语言的发展历史上看，R主要是统计学家为解决数据分析领域的问题而开发的语言，因此R具有一些独特的优势。
+</p>
+<ul class="org-ul">
+<li>统计学家和前沿算法（3400+ 扩展包）。
+</li>
+<li>开放的源代码（自由且免费），可以部署在任何操作系统，例如Windows、Linux、Mac OS X、BSD、Unix。
+</li>
+<li>强大的社区支持。
+</li>
+<li>高质量、广泛的统计分析、数据挖掘平台。
+</li>
+<li>重复性的分析工作（Sweave = R + LaTeX），借助R语言的强大分析能力+LaTeX完美的排版能力，可以自动生成分析报告。
+</li>
+<li>方便的扩展性。
+</li>
+<li>可通过相应接口连接数据库，例如Oracle、DB2、MySQL。
+
+<ul class="org-ul">
+<li>同Python、Java、C、C++等语言进行互调。
+</li>
+
+<li>提供API接口均可以调用，例如Google、Twitter、Weibo。
+</li>
+
+<li>其他统计软件大部分均可调用R，例如SAS、SPSS、Statistica等。
+</li>
+
+<li>甚至一些比较直接的商业应用，例如Oracle R Enterprise、R add-on for Teradata、Sybase RAP等。
+</li>
+</ul>
+</li>
+</ul>
+<p>
+虽然R语言有诸多优势，但它并不是万能的——它毕竟是统计编程类语言。受到其算法架构的通用性以及速度性能方面的影响，因此其初始设计完全基于单线程和纯粹的内存计算。虽然一般情况下无关R的使用，但在当今大数据条件下，这两个设计思路的劣势逐渐变得愈加刺眼。好在R的一些优秀的扩展性包解决了上述问题，例如：
+</p>
+
+<ul class="org-ul">
+<li>snow支持MPI、PVM、nws、Socket通信，解决单线程和内存限制；
+</li>
+<li>multicore适合大规模计算环境，主要解决单线程问题；
+</li>
+<li>parallel R 2.14.0版本增加的标准包，整合了snow和multicore功能；
+</li>
+<li>R + Hadoop在Hadoop集群上运行R代码；
+</li>
+<li>RHIPE提供了更友好的R代码运行环境，解决单线程和内存限制；
+</li>
+<li>Segue利用Amazon’s Web Services（EC2）。
+</li>
+</ul>
+<p>
+摘自<a href="http://www.programmer.com.cn/10588/">刘思喆博文</a> 刘思喆 神州数码思特奇首席数据挖掘专家。9年R语言使用经验，《153分钟学会R》作者。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">环境搭建</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li><a href="http://www.r-project.org/">The R Project for Statistical Computing</a> 提供了R语言解释器的<a href="http://mirrors.ustc.edu.cn/CRAN/">下载地址</a>页面 和相应的官方文档
+<ul class="org-ul">
+<li>Ubuntu软件源中内置了R。安装命令为：` sudo apt-get install r-base r-base-dev ` .由于Ubuntu源中的R一般随着Ubuntu版本的更新而更新，所以利用这个方法一般安装的R版本会比R的最新版晚半年左右。需要注意内置版本有可能过低带来的包的不兼容的问题.
+</li>
+</ul>
+</li>
+<li>IDE:<a href="https://www.rstudio.com">RStudio</a> 介绍和使用方法可以参考:
+<ul class="org-ul">
+<li><a href="http://www.shahuwang.com/2012/02/20/r%E8%AF%AD%E8%A8%80%E6%9C%80%E5%A5%BD%E7%9A%84ide-rstudio.html">http://www.shahuwang.com/2012/02/20/r%E8%AF%AD%E8%A8%80%E6%9C%80%E5%A5%BD%E7%9A%84ide-rstudio.html</a> 这篇文章对RStudio的界面的各个部分的作用进行了详细的介绍
+</li>
+<li><a href="https://github.com/wangyuchen/rserver-manual/blob/master/02_basic_features.md">https://github.com/wangyuchen/rserver-manual/blob/master/02_basic_features.md</a> 从使用的角度讲述了大量实用的技巧
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">包安装</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+初学者可以使用RStudio的图形界面安装,这样即直观又可以实现依赖的包的自动安装.等价于控制台输入install.packages("ggplot2")
+但是还是常常会遇到包之间的不兼容问题,这时可以尝试着重新安装那些错误的包,以及google,例如<a href="http://stackoverflow.com/questions/16987948/causes-of-error-package-was-built-before-3-0-0-please-re-install-it">http://stackoverflow.com/questions/16987948/causes-of-error-package-was-built-before-3-0-0-please-re-install-it</a> 中的问题,这个问题让我折腾了很久才解决.
+接下来的这种方法似乎更通用,控制台输入update.packages(checkBuilt = TRUE, ask = FALSE) It will update all the packages that need to be reinstalled.
+通过 find() 可以查询相关的软件包。比如用 find("sort") 查看包含 sort 的软件包。
+old.packages() 函数就可以查看本地安装的软件包有哪些可以更新，而 update.packages() 函数可以更新本地的软件包。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">快速入门</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">一些帮助函数</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>通过 help() 函数或问号获得帮助。比如输入 help(c) 或 ?c 就可以在弹出窗口中得到关于 c() 函数的详细的帮助信息。
+</li>
+<li>通过 args() 函数获得函数的参数信息。比如用 args(help) 查看 help() 函数的全部参数。
+</li>
+<li>通过 example() 获得示范。比如用 example(mean) 查看平均数的示例。
+</li>
+</ul>
+<p>
+c+ 通过 apropos() 可以查询相关的函数/对象。比如用 apropos("sort") 查看和 sort 有关的函数。
+</p>
+<ul class="org-ul">
+<li>在 RStudio 这样的 R 用户界面中把光标停留在函数名称上按 F1 即可获得相关函数的帮助信息。
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">数学运算</h3>
+<div class="outline-text-3" id="text-3-2">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">素数判断</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-R">findprime  &lt;- function(x) {
+    if (x %in% c(2,3,5,7)) return(TRUE)
+    if (x%%2 == 0 | x==1) return(FALSE)
+    xsqrt &lt;- round(sqrt(x))
+    xseq &lt;- seq(from=3,to=xsqrt,by=2)
+    if (all(x %% xseq !=0)) return(TRUE)
+    else return(FALSE)
+}
+findprime(71)
+#语法说明
+#R语言的函数定义符合函数式编程语言常用的习惯 函数名&lt;-function(参数列表){函数体}
+#seq(from=3,to=xsqrt,by=2)生成3到xsqrt间隔为2的序列
+#all(x %% xseq !=0)
+</pre>
+</div>
+
+<pre class="example">
+[1] TRUE
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2">使用内置数据集</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<div class="org-src-container">
+
+<pre class="src src-R">data()  # 浏览内建的数据集
+data(rivers)    # 北美主要河流的长度（数据集）
+ls()    # 在工作空间中查看「河流」是否出现
+head(rivers)    # 撇一眼数据集
+length(rivers)  # 我们测量了多少条河流？
+summary(rivers)
+</pre>
+</div>
+
+<pre class="example">
+Data sets in package ‘datasets’:
+
+AirPassengers           Monthly Airline Passenger Numbers 1949-1960
+BJsales                 Sales Data with Leading Indicator
+BJsales.lead (BJsales)
+                        Sales Data with Leading Indicator
+BOD                     Biochemical Oxygen Demand
+CO2                     Carbon Dioxide Uptake in Grass Plants
+ChickWeight             Weight versus age of chicks on different diets
+DNase                   Elisa assay of DNase
+EuStockMarkets          Daily Closing Prices of Major European Stock
+                        Indices, 1991-1998
+Formaldehyde            Determination of Formaldehyde
+HairEyeColor            Hair and Eye Color of Statistics Students
+Harman23.cor            Harman Example 2.3
+Harman74.cor            Harman Example 7.4
+Indometh                Pharmacokinetics of Indomethacin
+InsectSprays            Effectiveness of Insect Sprays
+JohnsonJohnson          Quarterly Earnings per Johnson &amp; Johnson Share
+LakeHuron               Level of Lake Huron 1875-1972
+LifeCycleSavings        Intercountry Life-Cycle Savings Data
+Loblolly                Growth of Loblolly pine trees
+Nile                    Flow of the River Nile
+Orange                  Growth of Orange Trees
+OrchardSprays           Potency of Orchard Sprays
+PlantGrowth             Results from an Experiment on Plant Growth
+Puromycin               Reaction Velocity of an Enzymatic Reaction
+Seatbelts               Road Casualties in Great Britain 1969-84
+Theoph                  Pharmacokinetics of Theophylline
+Titanic                 Survival of passengers on the Titanic
+ToothGrowth             The Effect of Vitamin C on Tooth Growth in
+                        Guinea Pigs
+UCBAdmissions           Student Admissions at UC Berkeley
+UKDriverDeaths          Road Casualties in Great Britain 1969-84
+UKgas                   UK Quarterly Gas Consumption
+USAccDeaths             Accidental Deaths in the US 1973-1978
+USArrests               Violent Crime Rates by US State
+USJudgeRatings          Lawyers' Ratings of State Judges in the US
+                        Superior Court
+USPersonalExpenditure   Personal Expenditure Data
+VADeaths                Death Rates in Virginia (1940)
+WWWusage                Internet Usage per Minute
+WorldPhones             The World's Telephones
+ability.cov             Ability and Intelligence Tests
+airmiles                Passenger Miles on Commercial US Airlines,
+                        1937-1960
+airquality              New York Air Quality Measurements
+anscombe                Anscombe's Quartet of 'Identical' Simple Linear
+                        Regressions
+attenu                  The Joyner-Boore Attenuation Data
+attitude                The Chatterjee-Price Attitude Data
+austres                 Quarterly Time Series of the Number of
+                        Australian Residents
+beaver1 (beavers)       Body Temperature Series of Two Beavers
+beaver2 (beavers)       Body Temperature Series of Two Beavers
+cars                    Speed and Stopping Distances of Cars
+chickwts                Chicken Weights by Feed Type
+co2                     Mauna Loa Atmospheric CO2 Concentration
+crimtab                 Student's 3000 Criminals Data
+discoveries             Yearly Numbers of Important Discoveries
+esoph                   Smoking, Alcohol and (O)esophageal Cancer
+euro                    Conversion Rates of Euro Currencies
+euro.cross (euro)       Conversion Rates of Euro Currencies
+eurodist                Distances Between European Cities
+faithful                Old Faithful Geyser Data
+fdeaths (UKLungDeaths)
+                        Monthly Deaths from Lung Diseases in the UK
+freeny                  Freeny's Revenue Data
+freeny.x (freeny)       Freeny's Revenue Data
+freeny.y (freeny)       Freeny's Revenue Data
+infert                  Infertility after Spontaneous and Induced
+                        Abortion
+iris                    Edgar Anderson's Iris Data
+iris3                   Edgar Anderson's Iris Data
+islands                 Areas of the World's Major Landmasses
+ldeaths (UKLungDeaths)
+                        Monthly Deaths from Lung Diseases in the UK
+lh                      Luteinizing Hormone in Blood Samples
+longley                 Longley's Economic Regression Data
+lynx                    Annual Canadian Lynx trappings 1821-1934
+mdeaths (UKLungDeaths)
+                        Monthly Deaths from Lung Diseases in the UK
+morley                  Michelson Speed of Light Data
+mtcars                  Motor Trend Car Road Tests
+nhtemp                  Average Yearly Temperatures in New Haven
+nottem                  Average Monthly Temperatures at Nottingham,
+                        1920-1939
+npk                     Classical N, P, K Factorial Experiment
+occupationalStatus      Occupational Status of Fathers and their Sons
+precip                  Annual Precipitation in US Cities
+presidents              Quarterly Approval Ratings of US Presidents
+pressure                Vapor Pressure of Mercury as a Function of
+                        Temperature
+quakes                  Locations of Earthquakes off Fiji
+randu                   Random Numbers from Congruential Generator
+                        RANDU
+rivers                  Lengths of Major North American Rivers
+rock                    Measurements on Petroleum Rock Samples
+sleep                   Student's Sleep Data
+stack.loss (stackloss)
+                        Brownlee's Stack Loss Plant Data
+stack.x (stackloss)     Brownlee's Stack Loss Plant Data
+stackloss               Brownlee's Stack Loss Plant Data
+state.abb (state)       US State Facts and Figures
+state.area (state)      US State Facts and Figures
+state.center (state)    US State Facts and Figures
+state.division (state)
+                        US State Facts and Figures
+state.name (state)      US State Facts and Figures
+state.region (state)    US State Facts and Figures
+state.x77 (state)       US State Facts and Figures
+sunspot.month           Monthly Sunspot Data, from 1749 to "Present"
+sunspot.year            Yearly Sunspot Data, 1700-1988
+sunspots                Monthly Sunspot Numbers, 1749-1983
+swiss                   Swiss Fertility and Socioeconomic Indicators
+                        (1888) Data
+treering                Yearly Treering Data, -6000-1979
+trees                   Girth, Height and Volume for Black Cherry Trees
+uspop                   Populations Recorded by the US Census
+volcano                 Topographic Information on Auckland's Maunga
+                        Whau Volcano
+warpbreaks              The Number of Breaks in Yarn during Weaving
+women                   Average Heights and Weights for American Women
+
+
+Use ‘data(package = .packages(all.available = TRUE))’
+to list the data sets in all *available* packages.
+
+[1] "rivers"
+[1] 735 320 325 392 524 450
+[1] 141
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  135.0   310.0   425.0   591.2   680.0  3710.0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">输入输出</h3>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4">图形绘制</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+如果自己没有数据的话，可以用data()查看R语言内置的数据
+ggplot2和lattice都属于高级的格点绘图包，初学R语言的朋友可能会在二者选择上有所疑惑。从各自特点上来看，lattice入门较容易，作图速度较快，图形函数种类较多，比如它可以进行三维绘图，而ggplot2就不能。ggplot2需要一段时间的学习，但当你跨过这个门槛之后，就能体会到它的简洁和优雅，而且ggplot2可以通过底层组件构造前所未有的图形，你所受到的限制只是你的想象力。
+建议两种绘图包都可以研究一下。如果时间紧张，需要在一两天之内为论文做一张图，那么推荐用lattice，如果时间充裕，推荐学习ggplot2。
+</p>
+</div>
+<div id="outline-container-sec-3-4-1" class="outline-4">
+<h4 id="sec-3-4-1">简单图形</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<div class="org-src-container">
+
+<pre class="src src-python">import numpy, matplotlib, matplotlib.pyplot
+figure = matplotlib.pyplot.figure()
+axes = figure.add_subplot(111, title=u"Hello", xlabel="x",  
+ylabel="y")
+x = numpy.arange(-10, 10, 0.1)
+axes.plot(x, x**2)
+figure.savefig("/image/plot_test.png")
+figure.clf()
+"[[./image/plot_test.png]]"
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-R">library(ggplot2)
+p &lt;- ggplot(data=mpg,mapping=aes(x=cty,y=hwy))
+p + geom_point()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-R">data()
+#png(filename="散点图.png",width=480,height=480)
+plot(cars$dist~cars$speed,#y~x
+main="Relationship between car distance &amp; speed",#标题
+sub='sub title',
+xlab = "Speed(miles per hour)",#x轴标题
+ylab = "Distance travelled (miles)",#Y轴标题
+xlim = c(0,30),#设置x轴的取值区间为0到30
+ylim = c(0,140),#设置y轴的取值区间为0到140
+xaxs = "i",#这里是设置x轴的风格，暂时没看明白有多大区别
+yaxs = "i",
+col = "red",
+pch = 19)#pch指代点的形状，用数字表示，可查看帮助文档
+#dev.off()
+#这样就能在当前工作目录下生成一个png格式的图片了，如下图：
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/assets/blog/2014/05/11/R语言代码示例/simple.png" alt="/assets/blog/2014/05/11/R语言代码示例/simple.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-4-2" class="outline-4">
+<h4 id="sec-3-4-2">直方图</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<div class="org-src-container">
+
+<pre class="src src-R">hist(rnorm(1000))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/assets/blog/2014/05/11/R语言代码示例/hist.png" alt="/assets/blog/2014/05/11/R语言代码示例/hist.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5">统计</h3>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6">R与Latex</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+与文档整合在一起发布。R能够很好的与LaTex文档发布系统整合在一起，这意味着来自于R的统计输出和图形可以嵌入到可出版级的文档中。这并不是适合每一个人，除非你想写一本关于数据分析的书，或者你是不喜欢把你的结果拷贝到一个字符处理文档中，最短和最优雅的途径是通过R和LaTex来实现。
+</p>
+<ul class="org-ul">
+<li>Sweave <a href="http://cos.name/cn/topic/8767">http://cos.name/cn/topic/8767</a>
+</li>
+<li>knitr <a href="http://xccds1977.blogspot.com/2012/05/knitr.html">http://xccds1977.blogspot.com/2012/05/knitr.html</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">R常用包</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">聚类</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>常用的包： fpc，cluster，pvclust，mclust
+</li>
+<li>基于划分的方法: kmeans, pam, pamk, clara
+</li>
+<li>基于层次的方法: hclust, pvclust, agnes, diana
+</li>
+<li>基于模型的方法: mclust
+</li>
+<li>基于密度的方法: dbscan
+</li>
+<li>基于画图的方法: plotcluster, plot.hclust
+</li>
+<li>基于验证的方法: cluster.stats
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">分类</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>常用的包：rpart，party，randomForest，rpartOrdinal，tree，marginTree，maptree，survival
+</li>
+<li>决策树: rpart, ctree
+</li>
+<li>随机森林: cforest, randomForest
+</li>
+<li>回归: Logistic回归, Poisson回归: glm, predict, residuals
+</li>
+<li>生存分析: survfit, survdiff, coxph
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3">关联规则与频繁项集</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li>常用的包：
+</li>
+<li>arules：支持挖掘频繁项集，最大频繁项集，频繁闭项目集和关联规则
+</li>
+<li>DRM：回归和分类数据的重复关联模型
+</li>
+<li>APRIORI算法，广度RST算法：apriori, drm
+</li>
+<li>ECLAT算法： 采用等价类，RST深度搜索和集合的交集： eclat
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4">序列模式</h3>
+<div class="outline-text-3" id="text-4-4">
+<ul class="org-ul">
+<li>常用的包： arulesSequences
+</li>
+<li>SPADE算法： cSPADE
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5">时间序列</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li>常用的包： timsac
+</li>
+<li>时间序列构建函数： ts
+</li>
+<li>成分分解: decomp, decompose, stl, tsr
+</li>
+<li>统计
+</li>
+<li>常用的包： Base R, nlme
+</li>
+<li>方差分析: aov, anova
+</li>
+<li>密度分析: density
+</li>
+<li>假设检验: t.test, prop.test, anova, aov
+</li>
+<li>线性混合模型：lme
+</li>
+<li>主成分分析和因子分析：princomp
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6">图表</h3>
+<div class="outline-text-3" id="text-4-6">
+<ul class="org-ul">
+<li>条形图: barplot
+</li>
+<li>饼图: pie
+</li>
+<li>散点图: dotchart
+</li>
+<li>直方图: hist
+</li>
+<li>密度图: densityplot
+</li>
+<li>蜡烛图, 箱形图 boxplot
+</li>
+<li>QQ (quantile-quantile) 图: qqnorm, qqplot, qqline
+</li>
+<li>Bi-variate plot: coplot
+</li>
+<li>树: rpart
+</li>
+<li>Parallel coordinates: parallel, paracoor, parcoord
+</li>
+<li>热图, contour: contour, filled.contour
+</li>
+<li>其他图: stripplot, sunflowerplot, interaction.plot, matplot, fourfoldplot,assocplot, mosaicplot
+</li>
+<li>保存的图表格式: pdf, postscript, win.metafile, jpeg, bmp, png
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-7" class="outline-3">
+<h3 id="sec-4-7">数据操作</h3>
+<div class="outline-text-3" id="text-4-7">
+<ul class="org-ul">
+<li>缺失值：na.omit
+</li>
+<li>变量标准化：scale
+</li>
+<li>变量转置：t
+</li>
+<li>抽样：sample
+</li>
+<li>堆栈：stack, unstack
+</li>
+<li>其他：aggregate, merge, reshape
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-8" class="outline-3">
+<h3 id="sec-4-8">与数据挖掘软件Weka做接口</h3>
+<div class="outline-text-3" id="text-4-8">
+<ul class="org-ul">
+<li>RWeka: 通过这个接口，可以在R中使用Weka的所有算法。
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">图书</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">初级</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+官方的入门小册子<a href="http://rrurl.cn/nOwTo3">《An Introduction to R》</a>译名为《R导论》
+<a href="http://rrurl.cn/4lMtaA">《R4Beginners》</a> 中文名《R入门》
+刘思喆的<a href="http://rrurl.cn/ePAjvR">《153分钟学会R》</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">高级</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+《Statistics with R》和《The R book》。这两本书已经不再限于R基础了，而是结合了数据分析的各种常见方法来写就的，比较系统的介绍了R在线性回归、方差分析、多元统计、R绘图、时间序列分析、数据挖掘等各方面的内容
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3">特定领域</h3>
+<div class="outline-text-3" id="text-5-3">
+</div><div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">图形绘制</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+《R Graphics》全面介绍了R中绘图系统
+《Lattice：Multivariate Data Visualization with R》
+《Interactive and Dynamic Graphics for Data Analysis With R and GGobi》
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2">数据挖掘</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+《Data Mining with Rattle and R》
+《Data Mining with R:learing with case studies》
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-3" class="outline-4">
+<h4 id="sec-5-3-3">时间序列分析</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<p>
+《Time Series Analysis and Its Applications ：with R examples》
+《Analysis of financial time series》
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-4" class="outline-4">
+<h4 id="sec-5-3-4">经济金融</h4>
+<div class="outline-text-4" id="text-5-3-4">
+<p>
+《Econometrics In R》
+《Advanced Topics in Analysis of Economic and Financial Data Using R》
+《Modelling Financial Time Series With S-plus》。
+金融产品定价之类的常常要用到随机微分方程，《Simulation Inference Stochastic Differential Equations：with R examples》
+风险度量与管理类。比较经典的有《Simulation Techniques in Financial Risk Management》、《Modern Actuarial Risk Theory Using R》和《Quantitative Risk Management：Concepts, Techniques and Tools》。
+投资组合分析类和期权定价类《Portfolio Optimization with R》和《Option Pricing and Estimation of Financial Models with R》。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">网站</h2>
+<div class="outline-text-2" id="text-6">
+<ol class="org-ol">
+<li>官方网站 <a href="http://cran.csdb.cn/index.html">http://cran.csdb.cn/index.html</a> （官方文献集中地）
+</li>
+<li>统计之都论坛
+</li>
+<li>人大经济论坛－R子论坛 （免费资料也不少）
+</li>
+<li><a href="http://library.nu/">http://library.nu/</a> 这是网上电子书最多的地方，其中有一个R语言专门书柜（也就是一个shelves）
+</li>
+<li>一个国外著名的R语言群博 <a href="http://www.r-bloggers.com/">http://www.r-bloggers.com/</a>
+</li>
+<li>展示R语言的各类绘图 <a href="http://addictedtor.free.fr/graphiques/">http://addictedtor.free.fr/graphiques/</a>
+</li>
+<li><a href="http://rseek.org">http://rseek.org</a> 这是一个针对跟R有关的网站的Google自定义搜索
+</li>
+<li><a href="http://stackoverflow.comStack">http://stackoverflow.comStack</a> Overflow是一个具有搜索功能的Q&amp;A网站，主要是面向一些编程方面的问题，例如数据结构、编码和图形等。
+</li>
+<li><a href="http://stats.stackexchange.com">http://stats.stackexchange.com</a> Stack Exchange上的统计分析（Statistical Analysis）区也是一个有搜索功能的Q&amp;A网站，但这个网站更加偏向于统计，而不是编程。
+</li>
+</ol>
+</div>
+</div>
+
+</div>
+</div>
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2014-05-11</span>
+        <span title="last modification date" class="post-info">2014-05-11</span>
+        <span title="tags" class="post-info"><a href="/tags/r语言/">R语言</a></span>
+        <span title="author" class="post-info">sheldon</span>
+      </div>
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+          //var disqus_developer = 1;
+          var disqus_identifier = "/blog/2014/05/11/R语言代码示例";
+          var disqus_url = "https://github.com/xielongen/xielongen.github.io.git/blog/2014/05/11/R语言代码示例";
+          var disqus_shortname = 'lighthair';
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://google-code-prettify.googlecode.com/svn/loader/prettify.js"></script>
+      <script src="/media/js/main.js"></script>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.x (<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>
+          Copyright &copy; 2012 - 2014 <a href="mailto:xie &lt;dot&gt; long &lt;dot&gt; en &lt;at&gt; gmail &lt;dot&gt; com">sheldon</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/kelvinh/org-page" target="_blank">org-page</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
