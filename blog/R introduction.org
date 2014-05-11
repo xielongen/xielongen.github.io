@@ -1,0 +1,253 @@
+#+TITLE:       R常用源码示例
+#+AUTHOR:      sheldon
+#+EMAIL:       xie.long.en@gmail.com
+#+DATE:        2014-05-11 日
+#+URI:         /blog/%y/%m/%d/R常用源码示例
+#+KEYWORDS:    R
+#+TAGS:        R
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 常用源码
+
+#+TITLE:       R语言入门
+#+AUTHOR:      sheldon
+#+EMAIL:       xie.long.en@gmail.com
+#+DATE:        2014-05-11 日
+#+URI:         /blog/%y/%m/%d/R语言入门
+#+KEYWORDS:    R语言
+#+TAGS:        R
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 入门教程
+
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/2.5.0/
+#+REVEAL_HLEVEL: 3
+#+REVEAL_THEME:  sky
+#+REVEAL_TRANS:  fadey
+#+REVEAL_SPEED: slow
+#+REVEAL_MARGIN: 0
+#+BABEL: :session *R* :cache yes :results output graphics :exports both :tangle yes
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/org-manual.css" />
+* R语言简介
++ 工科生说Matlab完爆其他-------------指的是很多现成的工具箱
++ 数学系的说Mathematica高贵冷艳------数学功能丰富
++ 统计系的说R语言作图领域天下无敌-----绘图漂亮
++ 计算机系的说Python低调奢华有内涵----matplot,scipy,
+-------------------------------------------
+R语言是一个能够自由有效地用于统计计算和绘图的语言和环境，它提供了广泛的统计分析和绘图技术，包括线性和非线性模型、统计检验、时间序列、分类、聚类等方法。
+从R语言的发展历史上看，R主要是统计学家为解决数据分析领域的问题而开发的语言，因此R具有一些独特的优势。
++ 统计学家和前沿算法（3400+ 扩展包）。
++ 开放的源代码（自由且免费），可以部署在任何操作系统，例如Windows、Linux、Mac OS X、BSD、Unix。
++ 强大的社区支持。
++ 高质量、广泛的统计分析、数据挖掘平台。
++ 重复性的分析工作（Sweave = R + LaTeX），借助R语言的强大分析能力+LaTeX完美的排版能力，可以自动生成分析报告。
++ 方便的扩展性。
++ 可通过相应接口连接数据库，例如Oracle、DB2、MySQL。
+
+  + 同Python、Java、C、C++等语言进行互调。
+
+  + 提供API接口均可以调用，例如Google、Twitter、Weibo。
+
+  + 其他统计软件大部分均可调用R，例如SAS、SPSS、Statistica等。
+
+  + 甚至一些比较直接的商业应用，例如Oracle R Enterprise、R add-on for Teradata、Sybase RAP等。
+虽然R语言有诸多优势，但它并不是万能的——它毕竟是统计编程类语言。受到其算法架构的通用性以及速度性能方面的影响，因此其初始设计完全基于单线程和纯粹的内存计算。虽然一般情况下无关R的使用，但在当今大数据条件下，这两个设计思路的劣势逐渐变得愈加刺眼。好在R的一些优秀的扩展性包解决了上述问题，例如：
+
+- snow支持MPI、PVM、nws、Socket通信，解决单线程和内存限制；
+- multicore适合大规模计算环境，主要解决单线程问题；
+- parallel R 2.14.0版本增加的标准包，整合了snow和multicore功能；
+- R + Hadoop在Hadoop集群上运行R代码；
+- RHIPE提供了更友好的R代码运行环境，解决单线程和内存限制；
+- Segue利用Amazon’s Web Services（EC2）。
+摘自[[http://www.programmer.com.cn/10588/][刘思喆博文]] 刘思喆 神州数码思特奇首席数据挖掘专家。9年R语言使用经验，《153分钟学会R》作者。
+* 环境搭建
++ [[http://www.r-project.org/][The R Project for Statistical Computing]] 提供了R语言解释器的[[http://mirrors.ustc.edu.cn/CRAN/][下载地址]]页面 和相应的官方文档
+  + Ubuntu软件源中内置了R。安装命令为：` sudo apt-get install r-base r-base-dev ` .由于Ubuntu源中的R一般随着Ubuntu版本的更新而更新，所以利用这个方法一般安装的R版本会比R的最新版晚半年左右。需要注意内置版本有可能过低带来的包的不兼容的问题.
++ IDE:[[https://www.rstudio.com][RStudio]] 介绍和使用方法可以参考:
+  + http://www.shahuwang.com/2012/02/20/r%E8%AF%AD%E8%A8%80%E6%9C%80%E5%A5%BD%E7%9A%84ide-rstudio.html 这篇文章对RStudio的界面的各个部分的作用进行了详细的介绍
+  + https://github.com/wangyuchen/rserver-manual/blob/master/02_basic_features.md 从使用的角度讲述了大量实用的技巧
+** 包安装
+初学者可以使用RStudio的图形界面安装,这样即直观又可以实现依赖的包的自动安装.等价于控制台输入install.packages("ggplot2")
+但是还是常常会遇到包之间的不兼容问题,这时可以尝试着重新安装那些错误的包,以及google,例如http://stackoverflow.com/questions/16987948/causes-of-error-package-was-built-before-3-0-0-please-re-install-it 中的问题,这个问题让我折腾了很久才解决.
+接下来的这种方法似乎更通用,控制台输入update.packages(checkBuilt = TRUE, ask = FALSE) It will update all the packages that need to be reinstalled.
+通过 find() 可以查询相关的软件包。比如用 find("sort") 查看包含 sort 的软件包。
+old.packages() 函数就可以查看本地安装的软件包有哪些可以更新，而 update.packages() 函数可以更新本地的软件包。
+* 快速入门
+** 一些帮助函数
++ 通过 help() 函数或问号获得帮助。比如输入 help(c) 或 ?c 就可以在弹出窗口中得到关于 c() 函数的详细的帮助信息。
++ 通过 args() 函数获得函数的参数信息。比如用 args(help) 查看 help() 函数的全部参数。
++ 通过 example() 获得示范。比如用 example(mean) 查看平均数的示例。
+c+ 通过 apropos() 可以查询相关的函数/对象。比如用 apropos("sort") 查看和 sort 有关的函数。
++ 在 RStudio 这样的 R 用户界面中把光标停留在函数名称上按 F1 即可获得相关函数的帮助信息。
+** 数学运算
+*** 素数判断 
+#+BEGIN_SRC R  :results output :exports both 
+findprime  <- function(x) {
+    if (x %in% c(2,3,5,7)) return(TRUE)
+    if (x%%2 == 0 | x==1) return(FALSE)
+    xsqrt <- round(sqrt(x))
+    xseq <- seq(from=3,to=xsqrt,by=2)
+    if (all(x %% xseq !=0)) return(TRUE)
+    else return(FALSE)
+}
+findprime(71)
+#语法说明
+#R语言的函数定义符合函数式编程语言常用的习惯 函数名<-function(参数列表){函数体}
+#seq(from=3,to=xsqrt,by=2)生成3到xsqrt间隔为2的序列
+#all(x %% xseq !=0)
+#+END_SRC
+*** 使用内置数据集
+#+BEGIN_SRC R :results output :exports both 
+data()  # 浏览内建的数据集
+data(rivers)    # 北美主要河流的长度（数据集）
+ls()    # 在工作空间中查看「河流」是否出现
+head(rivers)    # 撇一眼数据集
+length(rivers)  # 我们测量了多少条河流？
+summary(rivers)
+#+END_SRC
+** 输入输出
+** 图形绘制
+如果自己没有数据的话，可以用data()查看R语言内置的数据
+ggplot2和lattice都属于高级的格点绘图包，初学R语言的朋友可能会在二者选择上有所疑惑。从各自特点上来看，lattice入门较容易，作图速度较快，图形函数种类较多，比如它可以进行三维绘图，而ggplot2就不能。ggplot2需要一段时间的学习，但当你跨过这个门槛之后，就能体会到它的简洁和优雅，而且ggplot2可以通过底层组件构造前所未有的图形，你所受到的限制只是你的想象力。
+建议两种绘图包都可以研究一下。如果时间紧张，需要在一两天之内为论文做一张图，那么推荐用lattice，如果时间充裕，推荐学习ggplot2。
+*** 简单图形
+#+BEGIN_SRC python :session :results file :exports code  file  :file ./image/plot_test.png
+import numpy, matplotlib, matplotlib.pyplot
+figure = matplotlib.pyplot.figure()
+axes = figure.add_subplot(111, title=u"Hello", xlabel="x",  
+ylabel="y")
+x = numpy.arange(-10, 10, 0.1)
+axes.plot(x, x**2)
+figure.savefig("/image/plot_test.png")
+figure.clf()
+"[[./image/plot_test.png]]"
+#+END_SRC
+
+#+BEGIN_SRC R :results output graphics  :exports both 
+library(ggplot2)
+p <- ggplot(data=mpg,mapping=aes(x=cty,y=hwy))
+p + geom_point()
+#+END_SRC
+#+BEGIN_SRC R :results output graphics :exports both :file simple.png
+data()
+#png(filename="散点图.png",width=480,height=480)
+plot(cars$dist~cars$speed,#y~x
+main="Relationship between car distance & speed",#标题
+sub='sub title',
+xlab = "Speed(miles per hour)",#x轴标题
+ylab = "Distance travelled (miles)",#Y轴标题
+xlim = c(0,30),#设置x轴的取值区间为0到30
+ylim = c(0,140),#设置y轴的取值区间为0到140
+xaxs = "i",#这里是设置x轴的风格，暂时没看明白有多大区别
+yaxs = "i",
+col = "red",
+pch = 19)#pch指代点的形状，用数字表示，可查看帮助文档
+#dev.off()
+#这样就能在当前工作目录下生成一个png格式的图片了，如下图：
+#+END_SRC
+*** 直方图
+#+BEGIN_SRC R  :results output graphics output :exports both  :file hist.png
+hist(rnorm(1000))
+#+END_SRC
+** 统计
+** R与Latex
+与文档整合在一起发布。R能够很好的与LaTex文档发布系统整合在一起，这意味着来自于R的统计输出和图形可以嵌入到可出版级的文档中。这并不是适合每一个人，除非你想写一本关于数据分析的书，或者你是不喜欢把你的结果拷贝到一个字符处理文档中，最短和最优雅的途径是通过R和LaTex来实现。
++ Sweave http://cos.name/cn/topic/8767
++ knitr http://xccds1977.blogspot.com/2012/05/knitr.html
+* R常用包
+** 聚类
++ 常用的包： fpc，cluster，pvclust，mclust
++ 基于划分的方法: kmeans, pam, pamk, clara
++ 基于层次的方法: hclust, pvclust, agnes, diana
++ 基于模型的方法: mclust
++ 基于密度的方法: dbscan
++ 基于画图的方法: plotcluster, plot.hclust
++ 基于验证的方法: cluster.stats
+** 分类
++ 常用的包：rpart，party，randomForest，rpartOrdinal，tree，marginTree，maptree，survival
++ 决策树: rpart, ctree
++ 随机森林: cforest, randomForest
++ 回归: Logistic回归, Poisson回归: glm, predict, residuals
++ 生存分析: survfit, survdiff, coxph
+** 关联规则与频繁项集
++ 常用的包：
++ arules：支持挖掘频繁项集，最大频繁项集，频繁闭项目集和关联规则
++ DRM：回归和分类数据的重复关联模型
++ APRIORI算法，广度RST算法：apriori, drm
++ ECLAT算法： 采用等价类，RST深度搜索和集合的交集： eclat
+** 序列模式
++ 常用的包： arulesSequences
++ SPADE算法： cSPADE
+** 时间序列
++ 常用的包： timsac
++ 时间序列构建函数： ts
++ 成分分解: decomp, decompose, stl, tsr
++ 统计
++ 常用的包： Base R, nlme
++ 方差分析: aov, anova
++ 密度分析: density
++ 假设检验: t.test, prop.test, anova, aov
++ 线性混合模型：lme
++ 主成分分析和因子分析：princomp
+** 图表
++ 条形图: barplot
++ 饼图: pie
++ 散点图: dotchart
++ 直方图: hist
++ 密度图: densityplot
++ 蜡烛图, 箱形图 boxplot
++ QQ (quantile-quantile) 图: qqnorm, qqplot, qqline
++ Bi-variate plot: coplot
++ 树: rpart
++ Parallel coordinates: parallel, paracoor, parcoord
++ 热图, contour: contour, filled.contour
++ 其他图: stripplot, sunflowerplot, interaction.plot, matplot, fourfoldplot,assocplot, mosaicplot
++ 保存的图表格式: pdf, postscript, win.metafile, jpeg, bmp, png
+** 数据操作
++ 缺失值：na.omit
++ 变量标准化：scale
++ 变量转置：t
++ 抽样：sample
++ 堆栈：stack, unstack
++ 其他：aggregate, merge, reshape
+** 与数据挖掘软件Weka做接口
++ RWeka: 通过这个接口，可以在R中使用Weka的所有算法。
+* 图书
+** 初级
+官方的入门小册子[[http://rrurl.cn/nOwTo3][《An Introduction to R》]]译名为《R导论》
+[[http://rrurl.cn/4lMtaA][《R4Beginners》]] 中文名《R入门》
+刘思喆的[[http://rrurl.cn/ePAjvR][《153分钟学会R》]]
+** 高级
+《Statistics with R》和《The R book》。这两本书已经不再限于R基础了，而是结合了数据分析的各种常见方法来写就的，比较系统的介绍了R在线性回归、方差分析、多元统计、R绘图、时间序列分析、数据挖掘等各方面的内容
+** 特定领域
+*** 图形绘制
+《R Graphics》全面介绍了R中绘图系统
+《Lattice：Multivariate Data Visualization with R》
+《Interactive and Dynamic Graphics for Data Analysis With R and GGobi》
+*** 数据挖掘
+《Data Mining with Rattle and R》
+《Data Mining with R:learing with case studies》
+*** 时间序列分析
+《Time Series Analysis and Its Applications ：with R examples》
+《Analysis of financial time series》
+*** 经济金融
+《Econometrics In R》
+《Advanced Topics in Analysis of Economic and Financial Data Using R》
+《Modelling Financial Time Series With S-plus》。
+金融产品定价之类的常常要用到随机微分方程，《Simulation Inference Stochastic Differential Equations：with R examples》
+风险度量与管理类。比较经典的有《Simulation Techniques in Financial Risk Management》、《Modern Actuarial Risk Theory Using R》和《Quantitative Risk Management：Concepts, Techniques and Tools》。
+投资组合分析类和期权定价类《Portfolio Optimization with R》和《Option Pricing and Estimation of Financial Models with R》。
+* 网站
+1. 官方网站 http://cran.csdb.cn/index.html （官方文献集中地）
+2. 统计之都论坛
+3. 人大经济论坛－R子论坛 （免费资料也不少）
+4. http://library.nu/ 这是网上电子书最多的地方，其中有一个R语言专门书柜（也就是一个shelves）
+5. 一个国外著名的R语言群博 http://www.r-bloggers.com/
+6. 展示R语言的各类绘图 http://addictedtor.free.fr/graphiques/
+7. http://rseek.org 这是一个针对跟R有关的网站的Google自定义搜索
+8. http://stackoverflow.comStack Overflow是一个具有搜索功能的Q&A网站，主要是面向一些编程方面的问题，例如数据结构、编码和图形等。
+9. http://stats.stackexchange.com Stack Exchange上的统计分析（Statistical Analysis）区也是一个有搜索功能的Q&A网站，但这个网站更加偏向于统计，而不是编程。
+
+
+
+
