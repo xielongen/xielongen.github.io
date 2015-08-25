@@ -1,0 +1,15 @@
+ipython
+numpy
+scipy
+#matplotlib
+pandas
+pylab
+
+#nltk
+#theano
+
+pillow
+selenium
+BeautifulSoup
+pyvirtualdisplay
+
