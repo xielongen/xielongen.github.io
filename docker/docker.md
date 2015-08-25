@@ -1,3 +1,9 @@
+http://dockerpool.com/static/books/docker_practice/data_management/volume.html
+
+http://www.alauda.cn/2015/07/17/dockerfileinstructions/
+
+http://seanlook.com/2014/11/17/dockerfile-introduction/
+
 sudo docker build --rm -t ubuntu/science .
 
 sudo groupadd docker
