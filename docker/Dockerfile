@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER longen "longen@wizardquant.com"
+MAINTAINER longen "x@xxxx.com"
 
 RUN sed -i "s/archive.ubuntu.com/ubuntu.uhost.hk/g" /etc/apt/sources.list
 RUN apt-get update
