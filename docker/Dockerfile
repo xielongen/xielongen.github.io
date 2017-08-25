@@ -1,21 +1,36 @@
-FROM ubuntu:14.04
-MAINTAINER longen "x@xxxx.com"
+FROM ubuntu:16.04
+#####################################################################
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list && apt-get update && apt-get -y upgrade
+#####################################################################
+RUN apt-get -y install vim wget curl git libffi-dev libssl-dev
+#####################################################################
+RUN apt-get -y install python python-dev python-pip ipython python3 python3-dev python3-pip ipython3
 
-RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN mkdir /root/.pip
+ADD pip.conf /root/.pip/pip.conf
+RUN pip install --upgrade pip && pip3 install --upgrade pip
 
-#RUN apt-get -y install vim wget git
-RUN apt-get -y install python python-dev python-pip
+# system
+RUN pip install psutil
 
-RUN apt-get -y build-dep python-numpy python-scipy python-matplotlib
-RUN apt-get -y install python-numpy python-scipy python-pandas python-matplotlib
+# meta
+RUN pip install meta astunparse
 
-ADD requirements.txt /tmp/
-RUN pip install -U -r /tmp/requirements.txt
+# performance
+RUN pip install line-profiler Cython
 
-RUN apt-get -y install firefox xvfb
+# base
+RUN pip install cffi cryptography lz4 chardet requests Jinja2
 
-WORKDIR /root/
+# common
+RUN pip install configparser nose coverage
 
-VOLUME ["/root"]
+# data science
+RUN apt-get -y build-dep python-numpy python-scipy python-pandas python-matplotlib
+RUN pip install numpy scipy pandas==0.19 matplotlib
+
+# service
+RUN pip install pymongo PyMySQL pyOpenSSL pyzmq redis sqlalchemy
+
+# web
+RUN pip install beautifulsoup4 Flask
